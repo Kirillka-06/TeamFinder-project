@@ -37,7 +37,8 @@ class ProjectListView(ListView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['all_skills'] = Skill.objects.order_by('name')
-        ctx['active_skill'] = self.request.GET.get('skill', '')
+        skill_name = self.request.GET.get('skill', '')
+        ctx['active_skill'] = Skill.objects.filter(name=skill_name).first() if skill_name else None
         return ctx
 
 
